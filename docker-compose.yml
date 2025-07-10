@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: logs
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3307:3306"
+    networks:
+      - review-app-network
+
+  zookeeper:
+    image: zookeeper:3.7  # Official Zookeeper image (latest stable version)
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - review-app-network
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://localhost:9093  # Internal communication address
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093  # Listens on all interfaces for internal communication
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT  # Explicitly define security protocol for INSIDE
+      KAFKA_LISTENER_NAME_INSIDE: INSIDE  # Define the listener name
+      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT  # Default security protocol for other listeners (if any)
+      KAFKA_LISTENER_NAMES: INSIDE  # Listener names
+      KAFKA_BROKER_ID: 1
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+    ports:
+      - "9093:9093"
+    networks:
+      - review-app-network
+    depends_on:
+      - zookeeper
+
+networks:
+  review-app-network:
+    driver: bridge

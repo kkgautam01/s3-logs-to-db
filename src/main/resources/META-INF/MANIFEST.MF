@@ -1,0 +1,1 @@
+Main-Class: org.s3todb.ReviewIngestorApp

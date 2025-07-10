@@ -1,0 +1,45 @@
+{
+  "type": "record",
+  "name": "LineMessage",
+  "namespace": "org.s3todb.kafka",
+  "fields": [
+    {
+      "name": "provider",
+      "type": {
+        "type": "record",
+        "name": "Provider",
+        "fields": [
+          { "name": "providerId", "type": [ "null", "long" ], "default": null },
+          { "name": "name", "type": [ "null", "string" ], "default": null },
+          { "name": "cloudInfo", "type": [ "null", "string" ], "default": null }
+        ]
+      }
+    },
+    {
+      "name": "languageIdMap",
+      "type": {
+        "type": "map",
+        "values": "int"
+      }
+    },
+    {
+      "name": "ratingCategoryIdMap",
+      "type": {
+        "type": "map",
+        "values": "int"
+      }
+    },
+    {
+      "name": "line",
+      "type": "string"
+    },
+    {
+      "name": "fileType",
+      "type": "string"
+    },
+    {
+      "name": "retry",
+      "type": "int"
+    }
+  ]
+}
