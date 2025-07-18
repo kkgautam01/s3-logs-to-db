@@ -74,7 +74,7 @@ ALTER TABLE files AUTO_INCREMENT = 1;
 
 ```
 ## Assumptions & Actions
-1. Process about 500 logs a day.  
+1. Process about 500 logs files per minute.  
 2. Provider updates files multiple times in a day. File structure.  
    1. Format: *S3://bucket/prefix/yyyy/mm/dd/filename.jl*
    2. example: *s3://reviews/logs/2025/05/26/review01.jl*
