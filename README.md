@@ -1,4 +1,4 @@
-# S3 Logs to DB using Kafka
+# ETL - S3 Logs to DB using Kafka
 
 ## System Design
 ![review.jpg](review.jpg)
